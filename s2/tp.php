@@ -76,5 +76,23 @@ $stock=[$hp,$dell,$sony];
   
   </tbody>
 </table>
-  </body>
-</html>
+
+<hr>
+
+<div class="container">
+  <div class="row">
+  
+  <?php  foreach($stock as $c =>$produit) {?>
+  <div class="col-md-4 text-center shadow border">
+      <img style="height:300px;object-fit:cover" src="<?=$produit['image']?>" alt="" class="img-fluid" >
+  
+     <h3><?=$produit['libelle']?></h3>
+     <h3><?=$produit['prix']?> DHS</h3>
+     <a href="details.php?mouad=<?=$c?>" class="btn btn-sm btn-primary">Details</a>
+   </div>
+   <?php } ?>
+
+  </div>
+    </div>
+
+  </body></html>
