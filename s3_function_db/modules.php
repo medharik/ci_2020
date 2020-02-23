@@ -14,6 +14,12 @@ echo "erreur de connexion ".$e->getMessage();
     }
 
 }
+function dd($info){
+    echo "<pre><code>";
+var_dump($info);
+echo "</pre></code>";
+die();
+}
 
 function ajouter($libelle,$prix=0,$qtestock=0){
     try{
