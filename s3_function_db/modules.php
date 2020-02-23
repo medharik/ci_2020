@@ -33,11 +33,54 @@ function ajouter($libelle,$prix=0,$qtestock=0){
             }
         
 }
-function supprimer($id){
+
+function modifier($libelle,$prix,$qtestock,$id){
+    try{
+        
+        $pdo=connecter_db();
+        $req=$pdo->prepare("update produit set libelle=?,
+        prix=? , qtestock=? where id=? ");
+        $req->execute([$libelle,$prix,$qtestock,$id]);
+    }catch(PDOException $e ){
+        echo "erreur de modification ".$e->getMessage();
+    }
+    
+}
+// categorie
+function modifier_categorie($nom,$chemin="icon.png",$id){
+    try{
+        
+        $pdo=connecter_db();
+        $req=$pdo->prepare("update categorie set nom=?,
+        chemin=?  where id=? ");
+        $req->execute([$libelle,$prix,$qtestock,$id]);
+    }catch(PDOException $e ){
+        echo "erreur de modification ".$e->getMessage();
+    }
+    
+}
+
+function ajouter_categorie($nom,$chemin="icon.png"){
+    try{
+        //connexion db
+        $pdo=connecter_db();
+        $req=$pdo->prepare("insert into  categorie (nom,chemin) values(?,?)");
+        $req->execute([$nom,$chemin]);
+
+    }catch(PDOException $e ){
+        echo "erreur d'ajout  ".$e->getMessage();
+            }
+        
+}
+//fin categorie
+
+//code commun
+// supprimer(2,"categorie");
+function supprimer($id,$table="produit"){
     try{
 
         $pdo=connecter_db();
-        $req=$pdo->prepare("delete from produit where id=? ");
+        $req=$pdo->prepare("delete from $table where id=? ");
         $req->execute([$id]);
     }catch(PDOException $e ){
         echo "erreur de suppression ".$e->getMessage();
@@ -45,23 +88,10 @@ function supprimer($id){
         
 }
 
-function modifier($libelle,$prix,$qtestock,$id){
-    try{
-
-        $pdo=connecter_db();
-        $req=$pdo->prepare("update produit set libelle=?,
-         prix=? , qtestock=? where id=? ");
-        $req->execute([$libelle,$prix,$qtestock,$id]);
-    }catch(PDOException $e ){
-        echo "erreur de modification ".$e->getMessage();
-}
-        
-}
-
-function all(){
+function all($table="produit"){
 try{
     $pdo=connecter_db();
-    $req=$pdo->prepare(" select * from produit order by id desc ");
+    $req=$pdo->prepare(" select * from $table order by id desc ");
     $req->execute();
     $resultat = $req->fetchAll();
     return $resultat;
@@ -69,10 +99,10 @@ try{
     echo "erreur ds all ".$e->getMessage();
 }
 }
-function find($id){
+function find($id,$table="produit"){
 try{
     $pdo=connecter_db();
-    $req=$pdo->prepare(" select * from produit where id=?");
+    $req=$pdo->prepare(" select * from $table where id=?");
     $req->execute([$id]);
     $resultat = $req->fetch();
     return $resultat;
