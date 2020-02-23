@@ -1,3 +1,7 @@
+<?php
+require("modules.php");
+$categories=all("categorie");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +26,14 @@
                 </div>
                 <div class="form-group"><label for="qtestock">qte stock</label>
                 <input type="text" class="form-control" name="qtestock" id="qtestock" >
+                </div>
+                <div class="form-group"><label for="categorie_id">Categorie : </label>
+<select name="categorie_id" id="categorie_id" class="form-control">
+<?php foreach ($categories as $cat) {
+ ?>
+    <option value="<?=$cat['id']?>"><?=$cat['nom']?></option>
+<?php } ?>
+</select>
                 </div>
                 <button type="submit" class="btn btn-primary">valider</button>
             </form>

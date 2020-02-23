@@ -10,7 +10,7 @@ $options=[
 $pdo = new PDO( 'mysql:host=localhost;dbname=cig2020', 'root','',$options);    
 return $pdo;
     }catch(PDOException $e ){
-echo "erreur de connexion ".$e->getMessage();
+        echo "erreur de connexion ".$e->getMessage();
     }
 
 }
@@ -21,12 +21,13 @@ echo "</pre></code>";
 die();
 }
 
-function ajouter($libelle,$prix=0,$qtestock=0){
+function ajouter($libelle,$prix=0,$qtestock=0,$categorie_id){
     try{
         //connexion db
         $pdo=connecter_db();
-        $req=$pdo->prepare("insert into  produit (libelle,prix,qtestock) values(?,?,?)");
-        $req->execute([$libelle,$prix,$qtestock]);
+        $req=$pdo->prepare("insert into  produit 
+        (libelle,prix,qtestock,categorie_id) values(?,?,?,?)");
+        $req->execute([$libelle,$prix,$qtestock,$categorie_id]);
 
     }catch(PDOException $e ){
         echo "erreur d'ajout ".$e->getMessage();
@@ -34,26 +35,27 @@ function ajouter($libelle,$prix=0,$qtestock=0){
         
 }
 
-function modifier($libelle,$prix,$qtestock,$id){
+function modifier($libelle,$prix,$qtestock,$categorie_id,$id){
     try{
         
         $pdo=connecter_db();
         $req=$pdo->prepare("update produit set libelle=?,
-        prix=? , qtestock=? where id=? ");
-        $req->execute([$libelle,$prix,$qtestock,$id]);
+        prix=? , qtestock=? , categorie_id=? where id=? ");
+        $req->execute([$libelle,$prix,$qtestock,$categorie_id,$id]);
     }catch(PDOException $e ){
         echo "erreur de modification ".$e->getMessage();
     }
     
 }
 // categorie
+
 function modifier_categorie($nom,$chemin="icon.png",$id){
     try{
         
         $pdo=connecter_db();
         $req=$pdo->prepare("update categorie set nom=?,
         chemin=?  where id=? ");
-        $req->execute([$libelle,$prix,$qtestock,$id]);
+        $req->execute([$nom,$chemin,$id]);
     }catch(PDOException $e ){
         echo "erreur de modification ".$e->getMessage();
     }
@@ -99,6 +101,17 @@ try{
     echo "erreur ds all ".$e->getMessage();
 }
 }
+function allBy($condition,$table="produit"){
+try{
+    $pdo=connecter_db();
+    $req=$pdo->prepare(" select * from $table where $condition order by id desc ");
+    $req->execute();
+    $resultat = $req->fetchAll();
+    return $resultat;
+}catch(PDOException $e ){
+    echo "erreur ds all ".$e->getMessage();
+}
+}
 function find($id,$table="produit"){
 try{
     $pdo=connecter_db();
@@ -114,4 +127,25 @@ try{
 // // var_dump($resultat);
 // $resultat=find(3);
 // var_dump($resultat);
+/**
+ * SQL 
+ * create database cig2020
+ * use cig2020
+ * create table produit (
+ * id int primary key auto_increment,
+ * libelle varchar(200) unique,
+ * prix double ,
+ * qtestock double  default 0,
+ * 
+ * 
+ * )
+ * create table categorie
+ * (
+ * id int primary key auto_increment, 
+ * nom varchar(30) not null unique,
+ * )
+ * alter table produit add categorie_id int 
+ * alter table produit add constraint foreign key(categorie_id)
+ * references categorie(id) on delete cascade 
+ */
 ?>

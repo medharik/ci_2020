@@ -1,3 +1,8 @@
+
+<?php 
+
+$cats=all("categorie");
+?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">FST  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,6 +17,18 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="create.php">Nouveau</a>
           <a class="dropdown-item" href="index.php">Liste des produits</a>
+          <?php foreach($cats as $c) {?>
+          <a class="dropdown-item" href="index.php?categorie_id=<?=$c['id']?>"><?=$c['nom']?></a>
+          <?php } ?>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Categories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="create_categorie.php">Nouveau</a>
+          <a class="dropdown-item" href="index_categorie.php">Liste des produits</a>
         </div>
       </li>
     </ul>

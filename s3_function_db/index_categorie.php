@@ -1,11 +1,6 @@
 <?php 
 include("modules.php");
-if(isset($_GET['categorie_id'])){
-  $resultat=allBy("categorie_id=".$_GET['categorie_id'],"produit");
-  
-}else
-$resultat=all("produit");
-
+$resultat=all("categorie");
 $message="";
 $classe="d-none";
 if(isset($_GET['n'])){
@@ -24,7 +19,7 @@ switch($_GET['n']){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>liste des produits</title>
+    <title>liste des categories</title>
 <style>
 
 html,body{
@@ -38,16 +33,15 @@ min-height:100vh;
 
 <div class="alert alert-info <?=$classe?>"><?=$message;?></div>
 
-   <h3 class="text-center text-danger">liste des produits </h3>
+   <h3 class="text-center text-danger">liste des categories </h3>
 
    <div class="container">
    <table class="table table-dark">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Libelle</th>
-      <th scope="col">Prix</th>
-      <th scope="col">Categorie</th>
+      <th scope="col">nom</th>
+      <th scope="col">chemin</th>
       <th scope="col">actions</th>
     </tr>
   </thead>
@@ -55,19 +49,13 @@ min-height:100vh;
   <?php foreach($resultat as $ligne ) { ?>
     <tr>
       <th scope="row"><?=$ligne['id']?></th>
-      <td><?=$ligne['libelle']?></td>
-      <td><?=$ligne['prix']?></td>
-      <td><?php 
-     $categorie= find($ligne['categorie_id'],"categorie");
- echo $categorie['nom'];      
-      ?></td>
- 
-
+      <td><?=$ligne['nom']?></td>
+      <td><?=$ligne['chemin']?></td>
       <td>
      <div class="btn-group">
-      <a href="show.php?id=<?=$ligne['id']?>" class="btn btn-info btn-sm">Consulter</a>
-      <a href="edit.php?id=<?=$ligne['id']?>" class="btn btn-warning btn-sm">Modifier</a>
-      <a href="delete.php?id=<?=$ligne['id']?>" class="btn btn-danger btn-sm"  onclick="return confirm('Supprimer ?')">Supprimer</a>
+      <a href="show_categorie.php?id=<?=$ligne['id']?>" class="btn btn-info btn-sm">Consulter</a>
+      <a href="edit_categorie.php?id=<?=$ligne['id']?>" class="btn btn-warning btn-sm">Modifier</a>
+      <a href="delete_categorie.php?id=<?=$ligne['id']?>" class="btn btn-danger btn-sm"  onclick="return confirm('Supprimer ?')">Supprimer</a>
      
      </div>
 
