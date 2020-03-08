@@ -21,13 +21,13 @@ echo "</pre></code>";
 die();
 }
 
-function ajouter($libelle,$prix=0,$qtestock=0,$categorie_id){
+function ajouter($libelle,$prix=0,$qtestock=0,$categorie_id,$chemin){
     try{
         //connexion db
         $pdo=connecter_db();
         $req=$pdo->prepare("insert into  produit 
-        (libelle,prix,qtestock,categorie_id) values(?,?,?,?)");
-        $req->execute([$libelle,$prix,$qtestock,$categorie_id]);
+        (libelle,prix,qtestock,categorie_id,chemin) values(?,?,?,?,?)");
+        $req->execute([$libelle,$prix,$qtestock,$categorie_id,$chemin]);
 
     }catch(PDOException $e ){
         echo "erreur d'ajout ".$e->getMessage();
@@ -35,13 +35,13 @@ function ajouter($libelle,$prix=0,$qtestock=0,$categorie_id){
         
 }
 
-function modifier($libelle,$prix,$qtestock,$categorie_id,$id){
+function modifier($libelle,$prix,$qtestock,$categorie_id,$id,$chemin){
     try{
         
         $pdo=connecter_db();
         $req=$pdo->prepare("update produit set libelle=?,
-        prix=? , qtestock=? , categorie_id=? where id=? ");
-        $req->execute([$libelle,$prix,$qtestock,$categorie_id,$id]);
+        prix=? , qtestock=? , categorie_id=?,chemin=? where id=? ");
+        $req->execute([$libelle,$prix,$qtestock,$categorie_id,$chemin,$id]);
     }catch(PDOException $e ){
         echo "erreur de modification ".$e->getMessage();
     }
@@ -89,7 +89,14 @@ function supprimer($id,$table="produit"){
 }
         
 }
-
+function uploader($file){
+    $tmp = $file["tmp_name"];
+    $fileName = $file["name"];
+    if(!move_uploaded_file($tmp,"images/$fileName")){
+        die("erreur d'upload");
+    }
+    return "images/$fileName";
+}
 function all($table="produit"){
 try{
     $pdo=connecter_db();

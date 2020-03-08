@@ -5,7 +5,7 @@ require("modules.php");
 // $qtestock=$_POST['qtestock'];
 // $qtestock=$_POST['qtestock'];
 extract($_POST);
-ajouter($libelle,$prix,$qtestock,$categorie_id);
+ajouter($libelle,$prix,$qtestock,$categorie_id,uploader($_FILES["chemin"]));
 // redirection vers index.php
 header("location:index.php?n=str");
 ?>

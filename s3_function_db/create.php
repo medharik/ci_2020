@@ -17,7 +17,7 @@ $categories=all("categorie");
         <div class="row">
             <div class="col-md-6 mx-auto shadow">
             
-            <form action="store.php" method="post">
+            <form action="store.php" method="post" enctype="multipart/form-data">
                 <div class="form-group"><label for="libelle">libelle</label>
                 <input type="text" class="form-control" name="libelle" id="libelle" >
                 </div>
@@ -26,6 +26,9 @@ $categories=all("categorie");
                 </div>
                 <div class="form-group"><label for="qtestock">qte stock</label>
                 <input type="text" class="form-control" name="qtestock" id="qtestock" >
+                </div>
+        <div class="form-group"><label for="chemin">chemin</label>
+                <input type="file" class="form-control" name="chemin" id="chemin" >
                 </div>
                 <div class="form-group"><label for="categorie_id">Categorie : </label>
 <select name="categorie_id" id="categorie_id" class="form-control">

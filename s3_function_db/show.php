@@ -14,7 +14,7 @@ $produit=find($id);
 </head>
 <body>
 <div class="card mx-auto" style="width: 18rem;">
-  <img src="http://placehold.it/300x300" class="card-img-top" alt="...">
+  <img src="<?= $produit['chemin'] ?>" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title"><?=$produit['libelle']?></h5>
     <p class="card-text">Prix : <?=$produit['prix']?>DHS</p>
